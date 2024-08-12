@@ -1,45 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import CitySelector from './CitySelector'; // Import the CitySelector component
 import axios from 'axios';
-import './App.css';
 
-function App() {
-  const [weather, setWeather] = useState(null);
+const App = () => {
+  const [weatherData, setWeatherData] = useState(null);
+  const [city, setCity] = useState('London'); // Default city
+
+  const fetchWeather = async (city) => {
+    try {
+      const response = await axios.get(`http://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=${city}`);
+      setWeatherData(response.data);
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+    }
+  };
 
   useEffect(() => {
-    const fetchWeather = async () => {
-      const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
-      try {
-        const response = await axios.get(
-          `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=London`
-        );
-        setWeather(response.data);
-      } catch (error) {
-        console.error('Error fetching the weather data:', error);
-      }
-    };
+    fetchWeather(city); // Fetch weather for the default city on mount
+  }, [city]);
 
-    fetchWeather();
-  }, []);
+  const handleCityChange = (selectedCity) => {
+    setCity(selectedCity);
+  };
 
   return (
-    <div className="App">
+    <div>
       <h1>Weather App</h1>
-      {weather ? (
+      <CitySelector onSelectCity={handleCityChange} />
+      {weatherData && (
         <div>
-          <h2>{weather.location.name}</h2>
-          <img
-            src={weather.current.condition.icon}
-            alt={weather.current.condition.text}
-            className="weather-icon"
-          />
-          <p>{weather.current.temp_c}°C</p>
-          <p>{weather.current.condition.text}</p>
+          <h2>{weatherData.location.name}</h2>
+          <p>{weatherData.current.temp_c}°C</p>
+          <p>{weatherData.current.condition.text}</p>
         </div>
-      ) : (
-        <p>Loading...</p>
       )}
     </div>
   );
-}
+};
 
 export default App;
