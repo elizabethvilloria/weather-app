@@ -1,10 +1,37 @@
-import React from 'react';
-import Weather from './Weather';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
+  const [weather, setWeather] = useState(null);
+
+  useEffect(() => {
+    const fetchWeather = async () => {
+      const apiKey = process.env.REACT_APP_WEATHER_API_KEY;
+      try {
+        const response = await axios.get(
+          `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=London`
+        );
+        setWeather(response.data);
+      } catch (error) {
+        console.error('Error fetching the weather data:', error);
+      }
+    };
+
+    fetchWeather();
+  }, []);
+
   return (
     <div className="App">
-      <Weather />
+      <h1>Weather App</h1>
+      {weather ? (
+        <div>
+          <h2>{weather.location.name}</h2>
+          <p>{weather.current.temp_c}°C</p>
+          <p>{weather.current.condition.text}</p>
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
     </div>
   );
 }
