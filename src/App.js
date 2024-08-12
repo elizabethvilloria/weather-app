@@ -11,7 +11,7 @@ const App = () => {
   const fetchWeather = async (city) => {
     try {
       console.log(`Fetching weather for ${city}`); // Debugging line
-      const response = await axios.get(`http://api.weatherapi.com/v1/current.json?key=9f6c206098f44721bad80700241208&q=${city}`);
+      const response = await axios.get(`http://api.weatherapi.com/v1/current.json?key=${process.env.REACT_APP_WEATHER_API_KEY}&q=${city}`);
       console.log(response.data); // Debugging line
       setWeatherData(response.data);
     } catch (error) {
