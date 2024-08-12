@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './App.css';
 
 function App() {
   const [weather, setWeather] = useState(null);
@@ -26,6 +27,11 @@ function App() {
       {weather ? (
         <div>
           <h2>{weather.location.name}</h2>
+          <img
+            src={weather.current.condition.icon}
+            alt={weather.current.condition.text}
+            className="weather-icon"
+          />
           <p>{weather.current.temp_c}°C</p>
           <p>{weather.current.condition.text}</p>
         </div>
