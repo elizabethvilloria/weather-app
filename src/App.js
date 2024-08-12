@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import CitySelector from './CitySelector'; // Import the CitySelector component
 import axios from 'axios';
+import './App.css';
+
 
 const App = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -8,12 +10,15 @@ const App = () => {
 
   const fetchWeather = async (city) => {
     try {
-      const response = await axios.get(`http://api.weatherapi.com/v1/current.json?key=YOUR_API_KEY&q=${city}`);
+      console.log(`Fetching weather for ${city}`); // Debugging line
+      const response = await axios.get(`http://api.weatherapi.com/v1/current.json?key=9f6c206098f44721bad80700241208&q=${city}`);
+      console.log(response.data); // Debugging line
       setWeatherData(response.data);
     } catch (error) {
       console.error('Error fetching weather data:', error);
     }
   };
+  
 
   useEffect(() => {
     fetchWeather(city); // Fetch weather for the default city on mount
