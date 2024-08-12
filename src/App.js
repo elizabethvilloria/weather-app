@@ -29,16 +29,16 @@ const App = () => {
   };
 
   return (
-    <div>
-      <h1>Weather App</h1>
-      <CitySelector onSelectCity={handleCityChange} />
-      {weatherData && (
-        <div>
-          <h2>{weatherData.location.name}</h2>
-          <p>{weatherData.current.temp_c}°C</p>
-          <p>{weatherData.current.condition.text}</p>
-        </div>
-      )}
+      <div className="container">
+        <h1>Weather App</h1>
+        <CitySelector onSelectCity={handleCityChange} />
+        {weatherData && (
+          <div>
+            <h2>{weatherData.location.name}</h2>
+            <p>{weatherData.current.temp_c}°C</p>
+            <p>{weatherData.current.condition.text}</p>
+          </div>
+        )}
     </div>
   );
 };
