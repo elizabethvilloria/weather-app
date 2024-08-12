@@ -35,6 +35,11 @@ const App = () => {
         {weatherData && (
           <div>
             <h2>{weatherData.location.name}</h2>
+            <img
+            className="weather-icon"
+            src={weatherData.current.condition.icon}
+            alt={weatherData.current.condition.text}
+          />
             <p>{weatherData.current.temp_c}°C</p>
             <p>{weatherData.current.condition.text}</p>
           </div>
